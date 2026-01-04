@@ -4,19 +4,23 @@ export default function Home() {
   return (
     <main style={wrap}>
       <section style={hero}>
-        <h1>Synapse</h1>
+        <h1>Neodits</h1>
         <p style={subtitle}>
           Plataforma de autenticação segura para aplicações modernas.
         </p>
 
         <div style={buttons}>
-          <a href="/register" style={primary}>Criar conta</a>
-          <a href="/login" style={secondary}>Entrar</a>
+          <a href="/register" style={primary}>
+            Criar conta
+          </a>
+          <a href="/login" style={secondary}>
+            Entrar
+          </a>
         </div>
       </section>
 
       <section style={features}>
-        <h3>O que o Synapse oferece</h3>
+        <h3>O que o Neodits oferece</h3>
         <ul>
           <li>✔ Autenticação JWT segura</li>
           <li>✔ Confirmação de e-mail</li>
@@ -28,7 +32,7 @@ export default function Home() {
       </section>
 
       <footer style={footer}>
-        Synapse © 2026 • Plataforma de Autenticação Segura
+        Neodits © 2026 • Plataforma de Autenticação Segura
       </footer>
     </main>
   );

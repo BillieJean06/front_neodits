@@ -6,7 +6,7 @@ export default function Dashboard() {
   const [user] = useState(() => {
     if (typeof window === "undefined") return null;
     try {
-      return JSON.parse(localStorage.getItem("synapse_user"));
+      return JSON.parse(localStorage.getItem("Neodits_user"));
     } catch {
       return null;
     }
@@ -36,7 +36,7 @@ export default function Dashboard() {
           marginBottom: 40,
         }}
       >
-        <h1 style={{ fontSize: 28, letterSpacing: 2 }}>SYNAPSE</h1>
+        <h1 style={{ fontSize: 28, letterSpacing: 2 }}>Neodits</h1>
         <button
           onClick={() => {
             localStorage.clear();

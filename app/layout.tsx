@@ -13,7 +13,7 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "SYNAPSE",
+  title: "Neodits",
   description: "In progress.",
 };
 

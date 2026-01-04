@@ -13,7 +13,7 @@ export default function Login() {
     setLoading(true);
 
     try {
-      const res = await fetch("https://back-synapse.vercel.app/login", {
+      const res = await fetch("https://back-Neodits.vercel.app/login", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ username, password }),
@@ -27,9 +27,9 @@ export default function Login() {
         return;
       }
 
-      localStorage.setItem("synapse_user", JSON.stringify(data.user));
-      localStorage.setItem("synapse_token", data.token);
-      document.cookie = `synapse_token=${data.token}; path=/; max-age=7200; SameSite=Lax`;
+      localStorage.setItem("Neodits_user", JSON.stringify(data.user));
+      localStorage.setItem("Neodits_token", data.token);
+      document.cookie = `Neodits_token=${data.token}; path=/; max-age=7200; SameSite=Lax`;
 
       window.location.href = "/dashboard";
     } catch {
@@ -42,7 +42,7 @@ export default function Login() {
   return (
     <div className="login-wrap">
       <form className="login-card" onSubmit={handleLogin}>
-        <h1 className="logo">SYNAPSE</h1>
+        <h1 className="logo">Neodits</h1>
         <h3>LOGIN</h3>
 
         {error && <div className="error-float">{error}</div>}

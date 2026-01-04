@@ -23,7 +23,7 @@ export default function Register() {
     setLoading(true);
 
     try {
-      const res = await fetch("https://back-synapse.vercel.app/register", {
+      const res = await fetch("https://back-Neodits.vercel.app/register", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(form),
@@ -49,7 +49,7 @@ export default function Register() {
   return (
     <div className="wrap">
       <form className="card" onSubmit={handleRegister}>
-        <h1 className="logo">SYNAPSE</h1>
+        <h1 className="logo">Neodits</h1>
         <h3>REGISTRAR</h3>
 
         {error && <div className="error-float">{error}</div>}

@@ -8,7 +8,7 @@ export default function ResetClient() {
   const [msg, setMsg] = useState("");
 
   async function reset() {
-    const r = await fetch("https://back-synapse.vercel.app/reset-password", {
+    const r = await fetch("https://back-Neodits.vercel.app/reset-password", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ token, password }),
