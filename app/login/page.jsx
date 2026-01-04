@@ -9,6 +9,8 @@ export default function Login() {
 
   async function handleLogin(e) {
     e.preventDefault();
+    if (loading) return;
+
     setError("");
     setLoading(true);
 
@@ -23,17 +25,16 @@ export default function Login() {
 
       if (!data.success) {
         setError(data.message || "Usuário ou senha inválidos");
-        setLoading(false);
         return;
       }
 
-      localStorage.setItem("Neodits_user", JSON.stringify(data.user));
-      localStorage.setItem("Neodits_token", data.token);
-      document.cookie = `Neodits_token=${data.token}; path=/; max-age=7200; SameSite=Lax`;
+      localStorage.setItem("neodits_user", JSON.stringify(data.user));
+      localStorage.setItem("neodits_token", data.token);
+      document.cookie = `neodits_token=${data.token}; path=/; max-age=7200; SameSite=Lax`;
 
       window.location.href = "/dashboard";
     } catch {
-      setError("Erro ao conectar com o servidor");
+      setError("Erro ao conectar com o servidor.");
     } finally {
       setLoading(false);
     }
@@ -45,13 +46,13 @@ export default function Login() {
         <h1 className="logo">Neodits</h1>
         <h3>LOGIN</h3>
 
-        {error && <div className="error-float">{error}</div>}
+        {error && <div className="error">{error}</div>}
 
         <input
           placeholder="Usuário"
           value={username}
           onChange={(e) => setUsername(e.target.value)}
-          className={error ? "input error" : "input"}
+          required
         />
 
         <input
@@ -59,27 +60,27 @@ export default function Login() {
           placeholder="Senha"
           value={password}
           onChange={(e) => setPassword(e.target.value)}
-          className={error ? "input error" : "input"}
+          required
         />
 
-        <a href="/forgot-password" className="forgot">
+        <a className="forgot" href="/forgot-password">
           Esqueceu sua senha?
         </a>
 
         <button disabled={loading}>{loading ? "Entrando..." : "Entrar"}</button>
 
         <p className="register">
-          Ainda não tem uma conta? <a href="/register">Registre-se</a>
+          Ainda não tem conta? <a href="/register">Registre-se</a>
         </p>
       </form>
 
       <style jsx>{`
         .login-wrap {
           height: 100vh;
-          background: #ffffffff;
+          background: #fff;
           display: flex;
-          justify-content: center;
           align-items: center;
+          justify-content: center;
         }
 
         .login-card {
@@ -87,43 +88,38 @@ export default function Login() {
           padding: 40px;
           border-radius: 24px;
           background: #fff;
-          box-shadow: 0 10px 35px rgba(78, 53, 187, 0.75);
-          text-align: center;
+          box-shadow: 0 10px 40px rgba(84, 61, 230, 0.4);
           display: flex;
           flex-direction: column;
           gap: 14px;
+          text-align: center;
         }
 
         .logo {
+          font-size: 28px;
           letter-spacing: 3px;
-          color: #999;
+          color: #4f46e5;
           margin: 0;
         }
 
         h3 {
-          color: #888;
           letter-spacing: 2px;
-          margin-bottom: 10px;
+          color: #888;
         }
 
-        .input {
-          border-radius: 999px;
-          border: 1px solid #000000ff;
+        input {
           padding: 12px 18px;
-          font-size: 14px;
+          border-radius: 999px;
+          border: 1px solid #ccc;
           outline: none;
+          font-size: 14px;
         }
 
-        .input:focus {
-          border-color: #000000ff;
+        input:focus {
+          border-color: #4f46e5;
         }
 
-        .input.error {
-          border-color: #ff4d4d;
-          box-shadow: 0 0 0 2px rgba(255, 77, 77, 0.15);
-        }
-
-        .error-float {
+        .error {
           background: #ffecec;
           color: #ff4d4d;
           padding: 6px 12px;
@@ -133,32 +129,33 @@ export default function Login() {
 
         .forgot {
           font-size: 12px;
-          color: #000000ff;
+          color: #555;
           text-decoration: none;
         }
 
         button {
-          border-radius: 999px;
-          border: 1px solid #000000ff;
+          margin-top: 10px;
           padding: 10px;
-          background: transparent;
+          border-radius: 999px;
+          border: none;
+          background: #4f46e5;
+          color: #fff;
           font-weight: 700;
           cursor: pointer;
         }
 
-        button:hover {
-          background: #000;
-          color: #fff;
+        button:disabled {
+          opacity: 0.6;
         }
 
         .register {
           font-size: 12px;
-          color: #000000ff;
+          color: #555;
         }
 
         .register a {
-          color: #000;
-          font-weight: 700;
+          font-weight: bold;
+          color: #4f46e5;
         }
       `}</style>
     </div>

@@ -1,0 +1,10 @@
+:root {
+  --bg: #0b0b0b;
+  --bg-soft: #111111;
+  --primary: #4F3BFF;
+  --primary-soft: #6C5CFF;
+  --text: #ffffff;
+  --muted: #bfbfbf;
+  --danger: #ff4d4d;
+  --radius: 14px;
+}
