@@ -1,44 +1,107 @@
 "use client";
-import { useEffect, useState } from "react";
+
+import { useMemo, useEffect } from "react";
+import { useRouter } from "next/navigation";
+import Sidebar from "../components/Sidebar";
 
 export default function Dashboard() {
-  const [user, setUser] = useState(null);
+  const router = useRouter();
+
+  const user = useMemo(() => {
+    try {
+      const raw = localStorage.getItem("neodits_user");
+      return raw ? JSON.parse(raw) : null;
+    } catch {
+      return null;
+    }
+  }, []);
 
   useEffect(() => {
-    const load = () => {
-      const raw = localStorage.getItem("neodits_user");
-      if (!raw) return (window.location.href = "/login");
-      setUser(JSON.parse(raw));
-    };
-
-    load();
-  }, []);
+    if (!user) router.replace("/login");
+  }, [user, router]);
 
   if (!user) return null;
 
   return (
-    <main
-      style={{
-        minHeight: "100vh",
-        background: "#0b0b0b",
-        color: "#fff",
-        padding: 40,
-      }}
-    >
-      <header style={{ display: "flex", justifyContent: "space-between" }}>
-        <h1>Neodits</h1>
-        <button
-          onClick={() => {
-            localStorage.clear();
-            window.location.href = "/login";
-          }}
-        >
-          Sair
-        </button>
-      </header>
+    <>
+      <Sidebar user={user} />
 
-      <h2>Olá, {user.name}</h2>
-      <p>Conta protegida e verificada.</p>
-    </main>
+      <main style={styles.main}>
+        <header style={styles.header}>
+          <h1>Dashboard</h1>
+
+          <button
+            style={styles.logout}
+            onClick={() => {
+              localStorage.removeItem("neodits_token");
+              localStorage.removeItem("neodits_user");
+              router.replace("/login");
+            }}
+          >
+            Sair
+          </button>
+        </header>
+
+        <section style={styles.card}>
+          <h2>Bem-vindo, {user.name}</h2>
+          <p style={{ opacity: 0.7 }}>Sua conta está ativa e protegida.</p>
+
+          <div style={styles.grid}>
+            <Box title="Segurança" text="Conta verificada" />
+            <Box title="Chamados" text="Sistema SLA ativo" />
+            <Box title="Admin" text="Controle por níveis" />
+            <Box title="Logs" text="Auditoria e histórico" />
+          </div>
+        </section>
+      </main>
+    </>
   );
 }
+
+function Box({ title, text }) {
+  return (
+    <div style={styles.box}>
+      <strong>{title}</strong>
+      <span style={{ opacity: 0.7 }}>{text}</span>
+    </div>
+  );
+}
+
+const styles = {
+  main: {
+    marginLeft: 300,
+    minHeight: "100vh",
+    padding: 40,
+    background: "radial-gradient(circle at top, #1a1a1a, #000)",
+    color: "#fff",
+    fontFamily: "Inter, system-ui, sans-serif",
+  },
+  header: {
+    display: "flex",
+    justifyContent: "space-between",
+    marginBottom: 30,
+  },
+  logout: {
+    background: "transparent",
+    border: "1px solid #555",
+    borderRadius: 20,
+    padding: "8px 20px",
+    color: "#fff",
+  },
+  card: {
+    background: "rgb(255 255 255 / 5%)",
+    borderRadius: 24,
+    padding: 30,
+  },
+  grid: {
+    marginTop: 30,
+    display: "grid",
+    gridTemplateColumns: "repeat(auto-fit,minmax(220px,1fr))",
+    gap: 20,
+  },
+  box: {
+    background: "rgb(255 255 255 / 4%)",
+    borderRadius: 16,
+    padding: 20,
+  },
+};
